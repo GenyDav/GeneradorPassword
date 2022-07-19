@@ -16,10 +16,12 @@ public class Pantalla extends javax.swing.JFrame {
      */
     public Pantalla() {
         initComponents();
+        setTitle("Generador de contraseñas");
         setSize(670, 469);
         pack();
         setLocationRelativeTo(null);
         //setResizable(false);
+        jTextField1.setBackground(new java.awt.Color(0,0,0,1));
     }
 
     /**
@@ -31,6 +33,10 @@ public class Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jButton3 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton2 = new javax.swing.JButton();
@@ -41,6 +47,31 @@ public class Pantalla extends javax.swing.JFrame {
         setMaximumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jCheckBox2.setSelected(true);
+        jCheckBox2.setContentAreaFilled(false);
+        jCheckBox2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
+        jCheckBox2.setRolloverEnabled(false);
+        jCheckBox2.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        getContentPane().add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 344, 100, 30));
+
+        jCheckBox4.setContentAreaFilled(false);
+        jCheckBox4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jCheckBox4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
+        jCheckBox4.setRolloverEnabled(false);
+        jCheckBox4.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        getContentPane().add(jCheckBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 304, 120, 30));
+
+        jCheckBox3.setSelected(true);
+        jCheckBox3.setContentAreaFilled(false);
+        jCheckBox3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
+        jCheckBox3.setRolloverEnabled(false);
+        jCheckBox3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        getContentPane().add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 344, 110, 30));
+
+        jButton3.setContentAreaFilled(false);
+        jButton3.setOpaque(false);
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 301, 48, 37));
+
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("jTextField1");
@@ -48,14 +79,23 @@ public class Pantalla extends javax.swing.JFrame {
         jTextField1.setCaretColor(new java.awt.Color(204, 255, 255));
         jTextField1.setOpaque(false);
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 132, 310, 50));
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 308, -1, -1));
+
+        jCheckBox1.setSelected(true);
+        jCheckBox1.setContentAreaFilled(false);
+        jCheckBox1.setFocusPainted(false);
+        jCheckBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
+        jCheckBox1.setOpaque(false);
+        jCheckBox1.setRequestFocusEnabled(false);
+        jCheckBox1.setRolloverEnabled(false);
+        jCheckBox1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 304, 110, 30));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen.png"))); // NOI18N
         jButton2.setToolTipText("Generar nueva contraseña");
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnCopiar-clic.png"))); // NOI18N
+        jButton2.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen-clic.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen-hover.png"))); // NOI18N
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(501, 131, 54, 53));
 
@@ -114,7 +154,11 @@ public class Pantalla extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
