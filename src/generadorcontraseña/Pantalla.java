@@ -12,7 +12,8 @@ import javax.swing.ImageIcon;
  * @author Geny
  */
 public class Pantalla extends javax.swing.JFrame {
-    Gen generador;
+    private Gen generador;
+    private int numPropSel;
     
     /**
      * Creates new form Pantalla
@@ -28,6 +29,7 @@ public class Pantalla extends javax.swing.JFrame {
         campoPassword.setBackground(new java.awt.Color(0,0,0,1));
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
+        numPropSel = 4;
     }
 
     /**
@@ -40,11 +42,11 @@ public class Pantalla extends javax.swing.JFrame {
     private void initComponents() {
 
         tamPasswd = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        btnDecremento = new javax.swing.JButton();
         checkNums = new javax.swing.JCheckBox();
         checkMayus = new javax.swing.JCheckBox();
         checkSim = new javax.swing.JCheckBox();
-        jButton3 = new javax.swing.JButton();
+        btnIncremento = new javax.swing.JButton();
         campoPassword = new javax.swing.JTextField();
         checkMinus = new javax.swing.JCheckBox();
         btnGenerar = new javax.swing.JButton();
@@ -58,26 +60,31 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tamPasswd.setForeground(new java.awt.Color(255, 255, 255));
         tamPasswd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tamPasswd.setText("9999999");
+        tamPasswd.setText("0000009");
         tamPasswd.setAutoscrolls(false);
         tamPasswd.setBorder(null);
         tamPasswd.setCaretColor(new java.awt.Color(204, 255, 255));
         tamPasswd.setOpaque(false);
         getContentPane().add(tamPasswd, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 311, 100, 50));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec.png"))); // NOI18N
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-hover.png"))); // NOI18N
-        jButton4.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-clic.png"))); // NOI18N
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 336, 48, 37));
+        btnDecremento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec.png"))); // NOI18N
+        btnDecremento.setBorderPainted(false);
+        btnDecremento.setContentAreaFilled(false);
+        btnDecremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDecremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-hover.png"))); // NOI18N
+        btnDecremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-clic.png"))); // NOI18N
+        getContentPane().add(btnDecremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 336, 48, 37));
 
         checkNums.setSelected(true);
         checkNums.setContentAreaFilled(false);
         checkNums.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
         checkNums.setRolloverEnabled(false);
         checkNums.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        checkNums.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkNumsActionPerformed(evt);
+            }
+        });
         getContentPane().add(checkNums, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 342, 100, 30));
 
         checkMayus.setSelected(true);
@@ -86,6 +93,11 @@ public class Pantalla extends javax.swing.JFrame {
         checkMayus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
         checkMayus.setRolloverEnabled(false);
         checkMayus.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        checkMayus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkMayusActionPerformed(evt);
+            }
+        });
         getContentPane().add(checkMayus, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 302, 120, 30));
 
         checkSim.setSelected(true);
@@ -93,15 +105,25 @@ public class Pantalla extends javax.swing.JFrame {
         checkSim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-deselected.png"))); // NOI18N
         checkSim.setRolloverEnabled(false);
         checkSim.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        checkSim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkSimActionPerformed(evt);
+            }
+        });
         getContentPane().add(checkSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(439, 342, 110, 30));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc.png"))); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-hover.png"))); // NOI18N
-        jButton3.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-clic.png"))); // NOI18N
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 300, 48, 37));
+        btnIncremento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc.png"))); // NOI18N
+        btnIncremento.setBorderPainted(false);
+        btnIncremento.setContentAreaFilled(false);
+        btnIncremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIncremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-hover.png"))); // NOI18N
+        btnIncremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-clic.png"))); // NOI18N
+        btnIncremento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncrementoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnIncremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 300, 48, 37));
 
         campoPassword.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         campoPassword.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,6 +141,11 @@ public class Pantalla extends javax.swing.JFrame {
         checkMinus.setRequestFocusEnabled(false);
         checkMinus.setRolloverEnabled(false);
         checkMinus.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/checkbox-selected.png"))); // NOI18N
+        checkMinus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkMinusActionPerformed(evt);
+            }
+        });
         getContentPane().add(checkMinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 302, 110, 30));
 
         btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen.png"))); // NOI18N
@@ -169,6 +196,44 @@ public class Pantalla extends javax.swing.JFrame {
         campoPassword.setText(generador.generarClave());
     }//GEN-LAST:event_btnGenerarActionPerformed
 
+    private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
+        if(!checkBox.isSelected()){
+            if(numPropSel>1){
+                numPropSel--;
+                generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+                campoPassword.setText(generador.generarClave());
+            }else{
+                System.out.println("Sel");
+                checkBox.setSelected(true);
+            }
+        }else{
+            numPropSel++;
+            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+            campoPassword.setText(generador.generarClave());
+        }
+        System.out.println("propiedades: "+numPropSel);
+    }
+    
+    private void checkMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMinusActionPerformed
+        verificarCheckBoxes(checkMinus);
+    }//GEN-LAST:event_checkMinusActionPerformed
+
+    private void checkMayusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMayusActionPerformed
+        verificarCheckBoxes(checkMayus);
+    }//GEN-LAST:event_checkMayusActionPerformed
+
+    private void checkNumsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkNumsActionPerformed
+        verificarCheckBoxes(checkNums);
+    }//GEN-LAST:event_checkNumsActionPerformed
+
+    private void checkSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSimActionPerformed
+        verificarCheckBoxes(checkSim);
+    }//GEN-LAST:event_checkSimActionPerformed
+
+    private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
+        tamPasswd.setText(String.valueOf(Integer.parseInt(tamPasswd.getText())+1));
+    }//GEN-LAST:event_btnIncrementoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,14 +272,14 @@ public class Pantalla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCopiar;
+    private javax.swing.JButton btnDecremento;
     private javax.swing.JButton btnGenerar;
+    private javax.swing.JButton btnIncremento;
     private javax.swing.JTextField campoPassword;
     private javax.swing.JCheckBox checkMayus;
     private javax.swing.JCheckBox checkMinus;
     private javax.swing.JCheckBox checkNums;
     private javax.swing.JCheckBox checkSim;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField tamPasswd;
     // End of variables declaration//GEN-END:variables
