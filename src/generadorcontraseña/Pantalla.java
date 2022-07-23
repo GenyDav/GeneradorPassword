@@ -5,7 +5,9 @@
  */
 package generadorcontraseña;
 
+import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JSpinner;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
         numPropSel = 4;
+        
     }
 
     /**
@@ -65,6 +68,16 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setBorder(null);
         tamPasswd.setCaretColor(new java.awt.Color(204, 255, 255));
         tamPasswd.setOpaque(false);
+        tamPasswd.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tamPasswdFocusLost(evt);
+            }
+        });
+        tamPasswd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tamPasswdKeyTyped(evt);
+            }
+        });
         getContentPane().add(tamPasswd, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 311, 100, 50));
 
         btnDecremento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec.png"))); // NOI18N
@@ -211,7 +224,6 @@ public class Pantalla extends javax.swing.JFrame {
             generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
             campoPassword.setText(generador.generarClave());
         }
-        System.out.println("propiedades: "+numPropSel);
     }
     
     private void checkMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMinusActionPerformed
@@ -233,6 +245,22 @@ public class Pantalla extends javax.swing.JFrame {
     private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
         tamPasswd.setText(String.valueOf(Integer.parseInt(tamPasswd.getText())+1));
     }//GEN-LAST:event_btnIncrementoActionPerformed
+
+    private void tamPasswdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyTyped
+        int caracter = evt.getKeyChar();
+        if(!(caracter>=48&&caracter<=57)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tamPasswdKeyTyped
+
+    private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
+        System.out.println(tamPasswd.getText().length());
+        if(Integer.parseInt(tamPasswd.getText())<4){
+            tamPasswd.setText(String.valueOf(4));
+        }
+        generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+        campoPassword.setText(generador.generarClave());
+    }//GEN-LAST:event_tamPasswdFocusLost
 
     /**
      * @param args the command line arguments
