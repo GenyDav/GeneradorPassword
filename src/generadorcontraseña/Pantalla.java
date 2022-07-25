@@ -5,9 +5,8 @@
  */
 package generadorcontraseña;
 
-import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JSpinner;
 
 /**
  *
@@ -16,6 +15,7 @@ import javax.swing.JSpinner;
 public class Pantalla extends javax.swing.JFrame {
     private Gen generador;
     private int numPropSel;
+    private int tamPantalla;
     
     /**
      * Creates new form Pantalla
@@ -32,7 +32,7 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
         numPropSel = 4;
-        
+        tamPantalla = 9;
     }
 
     /**
@@ -63,17 +63,15 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tamPasswd.setForeground(new java.awt.Color(255, 255, 255));
         tamPasswd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tamPasswd.setText("0000009");
+        tamPasswd.setText("9");
         tamPasswd.setAutoscrolls(false);
         tamPasswd.setBorder(null);
         tamPasswd.setCaretColor(new java.awt.Color(204, 255, 255));
         tamPasswd.setOpaque(false);
-        tamPasswd.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tamPasswdFocusLost(evt);
-            }
-        });
         tamPasswd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tamPasswdKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tamPasswdKeyTyped(evt);
             }
@@ -86,6 +84,11 @@ public class Pantalla extends javax.swing.JFrame {
         btnDecremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDecremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-hover.png"))); // NOI18N
         btnDecremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-clic.png"))); // NOI18N
+        btnDecremento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDecrementoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDecremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 336, 48, 37));
 
         checkNums.setSelected(true);
@@ -243,25 +246,62 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_checkSimActionPerformed
 
     private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
-        tamPasswd.setText(String.valueOf(Integer.parseInt(tamPasswd.getText())+1));
+        aumentarLongitud();
     }//GEN-LAST:event_btnIncrementoActionPerformed
 
     private void tamPasswdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyTyped
         int caracter = evt.getKeyChar();
+        //System.out.println(caracter);
         if(!(caracter>=48&&caracter<=57)){
             evt.consume();
         }
     }//GEN-LAST:event_tamPasswdKeyTyped
 
-    private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
-        System.out.println(tamPasswd.getText().length());
-        if(Integer.parseInt(tamPasswd.getText())<4){
-            tamPasswd.setText(String.valueOf(4));
+    private void tamPasswdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyReleased
+        //System.out.println(evt.getKeyCode());
+        tamPantalla = Integer.parseInt(tamPasswd.getText());
+        System.out.println("tamaño: "+tamPantalla);
+        
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+            campoPassword.setText(generador.generarClave());
         }
-        generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-        campoPassword.setText(generador.generarClave());
-    }//GEN-LAST:event_tamPasswdFocusLost
+        if(evt.getKeyCode()==KeyEvent.VK_DOWN){
+            disminuirLongitud();       
+        }
+        if(evt.getKeyCode()==KeyEvent.VK_UP){
+            aumentarLongitud();
+        }
+    }//GEN-LAST:event_tamPasswdKeyReleased
 
+    private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
+        disminuirLongitud();
+    }//GEN-LAST:event_btnDecrementoActionPerformed
+
+    public void aumentarLongitud(){
+        tamPantalla++;
+        if(tamPantalla>100){
+            tamPasswd.setText(String.valueOf(100));
+            tamPantalla = 100;
+        }else{
+            tamPasswd.setText(String.valueOf(tamPantalla));
+            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+            campoPassword.setText(generador.generarClave());
+        }
+    }
+    
+    private void disminuirLongitud(){
+        tamPantalla--;
+        if(tamPantalla<4){
+            tamPasswd.setText(String.valueOf(4));
+            tamPantalla = 4;
+        }else{
+            tamPasswd.setText(String.valueOf(tamPantalla));
+            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+            campoPassword.setText(generador.generarClave());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -294,8 +334,7 @@ public class Pantalla extends javax.swing.JFrame {
             public void run() {
                 new Pantalla().setVisible(true);
             }
-        });
-        
+        });     
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
