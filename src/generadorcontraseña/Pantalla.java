@@ -32,7 +32,7 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
         numPropSel = 4;
-        tamPantalla = 9;
+        tamPantalla = Integer.parseInt(tamPasswd.getText());    
     }
 
     /**
@@ -63,7 +63,7 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tamPasswd.setForeground(new java.awt.Color(255, 255, 255));
         tamPasswd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        tamPasswd.setText("9");
+        tamPasswd.setText("10");
         tamPasswd.setAutoscrolls(false);
         tamPasswd.setBorder(null);
         tamPasswd.setCaretColor(new java.awt.Color(204, 255, 255));
@@ -143,7 +143,6 @@ public class Pantalla extends javax.swing.JFrame {
 
         campoPassword.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         campoPassword.setForeground(new java.awt.Color(255, 255, 255));
-        campoPassword.setText("jTextField1");
         campoPassword.setBorder(null);
         campoPassword.setCaretColor(new java.awt.Color(204, 255, 255));
         campoPassword.setOpaque(false);
@@ -208,24 +207,21 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCopiarActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-        campoPassword.setText(generador.generarClave());
+        actualizarClave();
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
         if(!checkBox.isSelected()){
             if(numPropSel>1){
                 numPropSel--;
-                generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-                campoPassword.setText(generador.generarClave());
+                actualizarClave();
             }else{
                 System.out.println("Sel");
                 checkBox.setSelected(true);
             }
         }else{
             numPropSel++;
-            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-            campoPassword.setText(generador.generarClave());
+            actualizarClave();
         }
     }
     
@@ -263,8 +259,7 @@ public class Pantalla extends javax.swing.JFrame {
         System.out.println("tamaño: "+tamPantalla);
         
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-            campoPassword.setText(generador.generarClave());
+            actualizarClave();
         }
         if(evt.getKeyCode()==KeyEvent.VK_DOWN){
             disminuirLongitud();       
@@ -285,8 +280,7 @@ public class Pantalla extends javax.swing.JFrame {
             tamPantalla = 100;
         }else{
             tamPasswd.setText(String.valueOf(tamPantalla));
-            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-            campoPassword.setText(generador.generarClave());
+            actualizarClave();
         }
     }
     
@@ -297,9 +291,13 @@ public class Pantalla extends javax.swing.JFrame {
             tamPantalla = 4;
         }else{
             tamPasswd.setText(String.valueOf(tamPantalla));
-            generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-            campoPassword.setText(generador.generarClave());
+            actualizarClave();
         }
+    }
+    
+    private void actualizarClave(){
+        generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+        campoPassword.setText(generador.generarClave());
     }
     
     /**
@@ -332,7 +330,9 @@ public class Pantalla extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pantalla().setVisible(true);
+                Pantalla p = new Pantalla();
+                p.setVisible(true);
+                p.actualizarClave();
             }
         });     
     }
