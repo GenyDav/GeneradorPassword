@@ -251,6 +251,7 @@ public class Pantalla extends javax.swing.JFrame {
             if(!tamPasswd.getText().equals("")){
                 tamPasswd.transferFocus(); 
                 //comprobarLongitud();
+                 actualizarPassword();
             }
             return;
         }
@@ -262,7 +263,6 @@ public class Pantalla extends javax.swing.JFrame {
 
             if(longitud<=4) btnDecremento.setEnabled(false);
             else btnDecremento.setEnabled(true);
-            
         }catch(NumberFormatException ex){
             longitud = -1;
             btnIncremento.setEnabled(false);
@@ -271,8 +271,22 @@ public class Pantalla extends javax.swing.JFrame {
         if(evt.getKeyCode()==KeyEvent.VK_UP){
             if(longitud<0) return; // si el campo está vacío, no hace nada
             if(longitud>=50) return;
-            if(!verificarLongitud())
-                aumentarLongitud();       
+            if(verificarLongitud()){ 
+                actualizarPassword();
+                return; 
+            }
+            aumentarLongitud();
+            actualizarPassword();
+        }
+        if(evt.getKeyCode()==KeyEvent.VK_DOWN){
+            if(longitud<0) return;
+            if(longitud<=4) return;
+            if(verificarLongitud()){
+                actualizarPassword();
+                return;
+            }
+            disminuirLongitud();
+            actualizarPassword();
         }
     }//GEN-LAST:event_tamPasswdKeyReleased
 
@@ -304,6 +318,13 @@ public class Pantalla extends javax.swing.JFrame {
     public void aumentarLongitud(){
         tamPasswd.setText(String.valueOf(++longitud));
         if(longitud>=50) btnIncremento.setEnabled(false);
+        if(longitud>4) btnDecremento.setEnabled(true);
+    }
+    
+    public void disminuirLongitud(){
+        tamPasswd.setText(String.valueOf(--longitud));
+        if(longitud<=4) btnDecremento.setEnabled(false);
+         if(longitud<50) btnIncremento.setEnabled(true);
     }
     
     private void actualizarPassword(){
