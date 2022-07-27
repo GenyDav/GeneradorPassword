@@ -268,7 +268,12 @@ public class Pantalla extends javax.swing.JFrame {
             btnIncremento.setEnabled(false);
             btnDecremento.setEnabled(false);
         }
-        
+        if(evt.getKeyCode()==KeyEvent.VK_UP){
+            if(longitud<0) return; // si el campo está vacío, no hace nada
+            if(longitud>=50) return;
+            if(!verificarLongitud())
+                aumentarLongitud();       
+        }
     }//GEN-LAST:event_tamPasswdKeyReleased
 
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
