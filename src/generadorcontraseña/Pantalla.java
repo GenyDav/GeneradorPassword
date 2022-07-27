@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class Pantalla extends javax.swing.JFrame {
     private Gen generador;
     private int numPropSel;
-    private int tamPantalla;
+    private int longitud;
     
     /**
      * Creates new form Pantalla
@@ -33,7 +33,7 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
         numPropSel = 4;
-        tamPantalla = Integer.parseInt(tamPasswd.getText());    
+        longitud = Integer.parseInt(tamPasswd.getText());    
     }
 
     /**
@@ -45,6 +45,7 @@ public class Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSpinner1 = new javax.swing.JSpinner();
         tamPasswd = new javax.swing.JTextField();
         btnDecremento = new javax.swing.JButton();
         checkNums = new javax.swing.JCheckBox();
@@ -60,6 +61,7 @@ public class Pantalla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 390, 80, 50));
 
         tamPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tamPasswd.setForeground(new java.awt.Color(255, 255, 255));
@@ -90,11 +92,6 @@ public class Pantalla extends javax.swing.JFrame {
         btnDecremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDecremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-hover.png"))); // NOI18N
         btnDecremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-clic.png"))); // NOI18N
-        btnDecremento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDecrementoActionPerformed(evt);
-            }
-        });
         getContentPane().add(btnDecremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 336, 48, 37));
 
         checkNums.setSelected(true);
@@ -140,11 +137,6 @@ public class Pantalla extends javax.swing.JFrame {
         btnIncremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIncremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-hover.png"))); // NOI18N
         btnIncremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-clic.png"))); // NOI18N
-        btnIncremento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIncrementoActionPerformed(evt);
-            }
-        });
         getContentPane().add(btnIncremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 300, 48, 37));
 
         campoPassword.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -172,6 +164,7 @@ public class Pantalla extends javax.swing.JFrame {
         btnGenerar.setBorderPainted(false);
         btnGenerar.setContentAreaFilled(false);
         btnGenerar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerar.setFocusPainted(false);
         btnGenerar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen-clic.png"))); // NOI18N
         btnGenerar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen-hover.png"))); // NOI18N
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +179,7 @@ public class Pantalla extends javax.swing.JFrame {
         btnCopiar.setBorderPainted(false);
         btnCopiar.setContentAreaFilled(false);
         btnCopiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCopiar.setFocusPainted(false);
         btnCopiar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnCopiar-clic.png"))); // NOI18N
         btnCopiar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnCopiar-hover.png"))); // NOI18N
         btnCopiar.addActionListener(new java.awt.event.ActionListener() {
@@ -208,112 +202,92 @@ public class Pantalla extends javax.swing.JFrame {
     private void btnCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopiarActionPerformed
         campoPassword.selectAll();
         campoPassword.copy();
-        //corregirLongitud();
     }//GEN-LAST:event_btnCopiarActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-       // corregirLongitud();
-        actualizarClave();
+        actualizarPassword();
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
         if(!checkBox.isSelected()){
             if(numPropSel>1){
                 numPropSel--;
-                actualizarClave();
+                actualizarPassword();
             }else{
-                System.out.println("Sel");
                 checkBox.setSelected(true);
             }
         }else{
             numPropSel++;
-            actualizarClave();
+            actualizarPassword();
         }
     }
     
     private void checkMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMinusActionPerformed
-        //corregirLongitud();
         verificarCheckBoxes(checkMinus);
     }//GEN-LAST:event_checkMinusActionPerformed
 
     private void checkMayusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMayusActionPerformed
-        //corregirLongitud();
         verificarCheckBoxes(checkMayus);
     }//GEN-LAST:event_checkMayusActionPerformed
 
     private void checkNumsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkNumsActionPerformed
-        //corregirLongitud();
         verificarCheckBoxes(checkNums);
     }//GEN-LAST:event_checkNumsActionPerformed
 
     private void checkSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSimActionPerformed
-        //corregirLongitud();
         verificarCheckBoxes(checkSim);
     }//GEN-LAST:event_checkSimActionPerformed
-
-    private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
-        aumentarLongitud();
-    }//GEN-LAST:event_btnIncrementoActionPerformed
 
     private void tamPasswdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyTyped
         int caracter = evt.getKeyChar();
         //System.out.println(caracter);
-        if(!(caracter>=48&&caracter<=57)){
+        if(!(caracter>=48&&caracter<=57)){ // Ignorar lo que no sea un número
             evt.consume();
         }
     }//GEN-LAST:event_tamPasswdKeyTyped
 
     private void tamPasswdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyReleased
-        //System.out.println(evt.getKeyCode());
-        tamPantalla = Integer.parseInt(tamPasswd.getText());
-        if(tamPantalla>=50)
-            btnIncremento.setEnabled(false);
-        else 
-            btnIncremento.setEnabled(true);
-        
-        if(tamPantalla<=4)
-            btnDecremento.setEnabled(false);
-        else
-            btnDecremento.setEnabled(true);
-            
-        System.out.println("tamaño: "+tamPantalla);
         if(evt.getKeyCode()==KeyEvent.VK_ENTER||evt.getKeyCode()==KeyEvent.VK_TAB){
-            tamPasswd.transferFocus(); 
-            // corregirLongitud() se llama cuando el campo pirde el foco
-            actualizarClave();
+            if(!tamPasswd.getText().equals("")){
+                tamPasswd.transferFocus(); 
+                //comprobarLongitud();
+            }
+            return;
         }
-        /*if(evt.getKeyCode()==KeyEvent.VK_TAB){
-            tamPasswd.transferFocus(); 
-            //corregirLongitud();
-            actualizarClave();
-        }*/
-        if(evt.getKeyCode()==KeyEvent.VK_DOWN){
-            disminuirLongitud();       
+        try{
+            longitud = Integer.parseInt(tamPasswd.getText());
+      
+            if(longitud>=50) btnIncremento.setEnabled(false);
+            else btnIncremento.setEnabled(true);
+
+            if(longitud<=4) btnDecremento.setEnabled(false);
+            else btnDecremento.setEnabled(true);
+            
+        }catch(NumberFormatException ex){
+            longitud = -1;
+            btnIncremento.setEnabled(false);
+            btnDecremento.setEnabled(false);
         }
-        if(evt.getKeyCode()==KeyEvent.VK_UP){
-            aumentarLongitud();
-        }
+        
     }//GEN-LAST:event_tamPasswdKeyReleased
 
-    private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
-        disminuirLongitud();
-    }//GEN-LAST:event_btnDecrementoActionPerformed
-
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
-        System.out.println("fuera de foco");
-        corregirLongitud();
+        System.out.println("Foco perdido");
+        //if(tamPasswd.getText().equals("")) longitud = -1;
+        verificarLongitud();
     }//GEN-LAST:event_tamPasswdFocusLost
-
-    public boolean corregirLongitud(){
-        if(tamPantalla<4){
-            tamPantalla = 4;
+    
+    private boolean verificarLongitud(){    
+        System.out.println("Longitud: " + longitud);
+        if(longitud<4){
+            longitud = 4;
             tamPasswd.setText("4");
             btnDecremento.setEnabled(false);
             btnIncremento.setEnabled(true);
             return true;
         }
-        if(tamPantalla>50){
-            tamPantalla = 50;
+        if(longitud>50){
+            longitud = 50;
             tamPasswd.setText("50");
             btnDecremento.setEnabled(true);
             btnIncremento.setEnabled(false);
@@ -322,29 +296,12 @@ public class Pantalla extends javax.swing.JFrame {
         return false;
     }
     
-    public void aumentarLongitud(){       
-        if(!corregirLongitud()){
-            tamPasswd.setText(String.valueOf(++tamPantalla));
-            actualizarClave();
-            if(tamPantalla>=50)
-                btnIncremento.setEnabled(false);
-            if(tamPantalla>4)
-                btnDecremento.setEnabled(true);
-        }
+    public void aumentarLongitud(){
+        tamPasswd.setText(String.valueOf(++longitud));
+        if(longitud>=50) btnIncremento.setEnabled(false);
     }
     
-    private void disminuirLongitud(){      
-        if(!corregirLongitud()){
-            tamPasswd.setText(String.valueOf(--tamPantalla));
-            actualizarClave();
-            if(tamPantalla<=4)
-                btnDecremento.setEnabled(false);
-            if(tamPantalla<50)
-                btnIncremento.setEnabled(true);
-        }
-    }
-    
-    private void actualizarClave(){
+    private void actualizarPassword(){
         generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         campoPassword.setText(generador.generarClave());
     }
@@ -353,35 +310,11 @@ public class Pantalla extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        /*try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pantalla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pantalla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pantalla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pantalla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-*/
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Pantalla p = new Pantalla();
                 p.setVisible(true);
-                p.actualizarClave();
+                p.actualizarPassword();
             }
         });     
     }
@@ -397,6 +330,7 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkNums;
     private javax.swing.JCheckBox checkSim;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField tamPasswd;
     // End of variables declaration//GEN-END:variables
 }
