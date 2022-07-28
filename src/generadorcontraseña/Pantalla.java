@@ -16,6 +16,7 @@ public class Pantalla extends javax.swing.JFrame {
     private Gen generador;
     private int numPropSel;
     private int longitud;
+    private boolean longitudCorregida;
     
     /**
      * Creates new form Pantalla
@@ -33,7 +34,8 @@ public class Pantalla extends javax.swing.JFrame {
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
         numPropSel = 4;
-        longitud = Integer.parseInt(tamPasswd.getText());    
+        longitud = Integer.parseInt(tamPasswd.getText());   
+        longitudCorregida = false;
     }
 
     /**
@@ -92,6 +94,11 @@ public class Pantalla extends javax.swing.JFrame {
         btnDecremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDecremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-hover.png"))); // NOI18N
         btnDecremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnDec-clic.png"))); // NOI18N
+        btnDecremento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDecrementoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDecremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 336, 48, 37));
 
         checkNums.setSelected(true);
@@ -137,6 +144,11 @@ public class Pantalla extends javax.swing.JFrame {
         btnIncremento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnIncremento.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-hover.png"))); // NOI18N
         btnIncremento.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc-clic.png"))); // NOI18N
+        btnIncremento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncrementoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnIncremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 300, 48, 37));
 
         campoPassword.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
@@ -293,8 +305,21 @@ public class Pantalla extends javax.swing.JFrame {
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
         System.out.println("Foco perdido");
         //if(tamPasswd.getText().equals("")) longitud = -1;
-        verificarLongitud();
+        longitudCorregida = verificarLongitud();
     }//GEN-LAST:event_tamPasswdFocusLost
+
+    private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
+        if(!longitudCorregida){
+            aumentarLongitud();
+            
+        }
+        actualizarPassword();
+        longitudCorregida = false;
+    }//GEN-LAST:event_btnIncrementoActionPerformed
+
+    private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDecrementoActionPerformed
     
     private boolean verificarLongitud(){    
         System.out.println("Longitud: " + longitud);
