@@ -309,16 +309,15 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_tamPasswdFocusLost
 
     private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
-        if(!longitudCorregida){
-            aumentarLongitud();
-            
-        }
+        if(!longitudCorregida) aumentarLongitud();  
         actualizarPassword();
         longitudCorregida = false;
     }//GEN-LAST:event_btnIncrementoActionPerformed
 
     private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
-        // TODO add your handling code here:
+        if(!longitudCorregida) disminuirLongitud();  
+        actualizarPassword();
+        longitudCorregida = false;
     }//GEN-LAST:event_btnDecrementoActionPerformed
     
     private boolean verificarLongitud(){    
