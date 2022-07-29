@@ -5,6 +5,7 @@
  */
 package generadorcontraseña;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
@@ -17,6 +18,7 @@ public class Pantalla extends javax.swing.JFrame {
     private int numPropSel;
     private int longitud;
     private boolean longitudCorregida;
+    private NivelSeguridad nivel;
     
     /**
      * Creates new form Pantalla
@@ -47,7 +49,7 @@ public class Pantalla extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
+        jPanel1 = new javax.swing.JPanel();
         tamPasswd = new javax.swing.JTextField();
         btnDecremento = new javax.swing.JButton();
         checkNums = new javax.swing.JCheckBox();
@@ -63,7 +65,9 @@ public class Pantalla extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(567, 390, 80, 50));
+
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 207, 446, 10));
 
         tamPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tamPasswd.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,6 +160,7 @@ public class Pantalla extends javax.swing.JFrame {
         campoPassword.setBorder(null);
         campoPassword.setCaretColor(new java.awt.Color(204, 255, 255));
         campoPassword.setOpaque(false);
+        campoPassword.setSelectedTextColor(new java.awt.Color(204, 204, 204));
         campoPassword.setSelectionColor(new java.awt.Color(0, 2, 72));
         getContentPane().add(campoPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 132, 310, 50));
 
@@ -218,8 +223,28 @@ public class Pantalla extends javax.swing.JFrame {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         actualizarPassword();
+        nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+        //nivel.calcularTiempoProcesamiento();
+        cambiarColorNivel(nivel.obtenerNivel());
     }//GEN-LAST:event_btnGenerarActionPerformed
 
+    private void cambiarColorNivel(int nivel){
+        switch(nivel){
+            case 1:
+                jPanel1.setBackground(new Color(255,51,51));
+                break;
+            case 2:
+                jPanel1.setBackground(new Color(255,153,51));
+                break;
+            case 3:
+                jPanel1.setBackground(new Color(255,204,51));
+                break;
+            case 4:
+                jPanel1.setBackground(new Color(153, 255, 153));
+                break;
+        }
+    }
+    
     private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
         if(!checkBox.isSelected()){
             if(numPropSel>1){
@@ -380,7 +405,7 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkNums;
     private javax.swing.JCheckBox checkSim;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField tamPasswd;
     // End of variables declaration//GEN-END:variables
 }
