@@ -66,7 +66,7 @@ public class Pantalla extends javax.swing.JFrame {
         setMaximumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(146, 208, 80));
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 207, 446, 10));
 
         tamPasswd.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -223,28 +223,11 @@ public class Pantalla extends javax.swing.JFrame {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         actualizarPassword();
-        nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+        //nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         //nivel.calcularTiempoProcesamiento();
-        cambiarColorNivel(nivel.obtenerNivel());
+        //cambiarColorNivel(nivel.obtenerNivel());
     }//GEN-LAST:event_btnGenerarActionPerformed
 
-    private void cambiarColorNivel(int nivel){
-        switch(nivel){
-            case 1:
-                jPanel1.setBackground(new Color(255,51,51));
-                break;
-            case 2:
-                jPanel1.setBackground(new Color(255,153,51));
-                break;
-            case 3:
-                jPanel1.setBackground(new Color(255,204,51));
-                break;
-            case 4:
-                jPanel1.setBackground(new Color(153, 255, 153));
-                break;
-        }
-    }
-    
     private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
         if(!checkBox.isSelected()){
             if(numPropSel>1){
@@ -373,12 +356,31 @@ public class Pantalla extends javax.swing.JFrame {
     public void disminuirLongitud(){
         tamPasswd.setText(String.valueOf(--longitud));
         if(longitud<=4) btnDecremento.setEnabled(false);
-         if(longitud<50) btnIncremento.setEnabled(true);
+        if(longitud<50) btnIncremento.setEnabled(true);
     }
     
     private void actualizarPassword(){
         generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         campoPassword.setText(generador.generarClave());
+        nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+        cambiarColorNivel(nivel.obtenerNivel());
+    }
+    
+    private void cambiarColorNivel(int nivel){
+        switch(nivel){
+            case 1:
+                jPanel1.setBackground(new Color(255,51,51));
+                break;
+            case 2:
+                jPanel1.setBackground(new Color(255,153,51));
+                break;
+            case 3:
+                jPanel1.setBackground(new Color(255,204,51));
+                break;
+            case 4:
+                jPanel1.setBackground(new Color(146,208,80));
+                break;
+        }
     }
     
     /**
