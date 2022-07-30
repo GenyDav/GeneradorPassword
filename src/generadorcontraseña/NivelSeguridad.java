@@ -39,8 +39,16 @@ public class NivelSeguridad {
     
     public int obtenerNivel(){
         double tmpProcesamiento = calcularTiempoProcesamiento();
-        int nivel = 0;
-        
+        int nivel;
+        if(tmpProcesamiento<=1){
+            nivel = 1;
+        }else if(tmpProcesamiento>1&&tmpProcesamiento<=1000){
+            nivel = 2;
+        }else if(tmpProcesamiento>1000&&tmpProcesamiento<=2500){
+            nivel = 3;
+        }else{
+            nivel = 4;
+        }
         return nivel;
     }
 }
