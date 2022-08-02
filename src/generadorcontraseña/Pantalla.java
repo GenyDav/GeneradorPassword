@@ -17,6 +17,8 @@ public class Pantalla extends javax.swing.JFrame {
     private Gen generador;
     private int numPropSel;
     private int longitud;
+    private final int LONGITUD_MAX;
+    private final int LONGITUD_MIN;
     private boolean longitudCorregida;
     private NivelSeguridad nivel;
     
@@ -25,12 +27,12 @@ public class Pantalla extends javax.swing.JFrame {
      */
     public Pantalla() {
         initComponents();
+        setResizable(false);
         tamPasswd.setFocusTraversalKeysEnabled(false);
         setTitle("Generador de contraseñas");
         setSize(670, 469);
         pack();
         setLocationRelativeTo(null);
-        //setResizable(false);
         setIconImage(new ImageIcon(getClass().getResource("/img/icono.png")).getImage());
         campoPassword.setBackground(new java.awt.Color(0,0,0,1));
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
@@ -38,6 +40,8 @@ public class Pantalla extends javax.swing.JFrame {
         numPropSel = 4;
         longitud = Integer.parseInt(tamPasswd.getText());   
         longitudCorregida = false;
+        LONGITUD_MAX = 50;
+        LONGITUD_MIN = 4;
     }
 
     /**
@@ -223,9 +227,6 @@ public class Pantalla extends javax.swing.JFrame {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         actualizarPassword();
-        //nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
-        //nivel.calcularTiempoProcesamiento();
-        //cambiarColorNivel(nivel.obtenerNivel());
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
@@ -271,17 +272,17 @@ public class Pantalla extends javax.swing.JFrame {
             if(!tamPasswd.getText().equals("")){
                 tamPasswd.transferFocus(); 
                 //comprobarLongitud();
-                 actualizarPassword();
+                actualizarPassword();
             }
             return;
         }
         try{
             longitud = Integer.parseInt(tamPasswd.getText());
       
-            if(longitud>=50) btnIncremento.setEnabled(false);
+            if(longitud>=LONGITUD_MAX) btnIncremento.setEnabled(false);
             else btnIncremento.setEnabled(true);
 
-            if(longitud<=4) btnDecremento.setEnabled(false);
+            if(longitud<=LONGITUD_MIN) btnDecremento.setEnabled(false);
             else btnDecremento.setEnabled(true);
         }catch(NumberFormatException ex){
             longitud = -1;
@@ -290,7 +291,7 @@ public class Pantalla extends javax.swing.JFrame {
         }
         if(evt.getKeyCode()==KeyEvent.VK_UP){
             if(longitud<0) return; // si el campo está vacío, no hace nada
-            if(longitud>=50) return;
+            if(longitud>=LONGITUD_MAX) return;
             if(verificarLongitud()){ 
                 actualizarPassword();
                 return; 
@@ -299,8 +300,7 @@ public class Pantalla extends javax.swing.JFrame {
             actualizarPassword();
         }
         if(evt.getKeyCode()==KeyEvent.VK_DOWN){
-            if(longitud<0) return;
-            if(longitud<=4) return;
+            if(longitud<=LONGITUD_MIN) return;
             if(verificarLongitud()){
                 actualizarPassword();
                 return;
@@ -311,8 +311,6 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_tamPasswdKeyReleased
 
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
-        System.out.println("Foco perdido");
-        //if(tamPasswd.getText().equals("")) longitud = -1;
         longitudCorregida = verificarLongitud();
     }//GEN-LAST:event_tamPasswdFocusLost
 
@@ -330,16 +328,16 @@ public class Pantalla extends javax.swing.JFrame {
     
     private boolean verificarLongitud(){    
         System.out.println("Longitud: " + longitud);
-        if(longitud<4){
-            longitud = 4;
-            tamPasswd.setText("4");
+        if(longitud<LONGITUD_MIN){
+            longitud = LONGITUD_MIN;
+            tamPasswd.setText(String.valueOf(LONGITUD_MIN));
             btnDecremento.setEnabled(false);
             btnIncremento.setEnabled(true);
             return true;
         }
-        if(longitud>50){
-            longitud = 50;
-            tamPasswd.setText("50");
+        if(longitud>LONGITUD_MAX){
+            longitud = LONGITUD_MAX;
+            tamPasswd.setText(String.valueOf(LONGITUD_MAX));
             btnDecremento.setEnabled(true);
             btnIncremento.setEnabled(false);
             return true;
@@ -349,14 +347,14 @@ public class Pantalla extends javax.swing.JFrame {
     
     public void aumentarLongitud(){
         tamPasswd.setText(String.valueOf(++longitud));
-        if(longitud>=50) btnIncremento.setEnabled(false);
-        if(longitud>4) btnDecremento.setEnabled(true);
+        if(longitud>=LONGITUD_MAX) btnIncremento.setEnabled(false);
+        if(longitud>LONGITUD_MIN) btnDecremento.setEnabled(true);
     }
     
     public void disminuirLongitud(){
         tamPasswd.setText(String.valueOf(--longitud));
-        if(longitud<=4) btnDecremento.setEnabled(false);
-        if(longitud<50) btnIncremento.setEnabled(true);
+        if(longitud<=LONGITUD_MIN) btnDecremento.setEnabled(false);
+        if(longitud<LONGITUD_MAX) btnIncremento.setEnabled(true);
     }
     
     private void actualizarPassword(){
