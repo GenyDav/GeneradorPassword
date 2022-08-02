@@ -32,7 +32,8 @@ public class NivelSeguridad {
     public double calcularTiempoProcesamiento(){
         double totalCombinaciones = Math.pow(totalCaracteres,longitudPasswd);
         System.out.println("Combinaciones: "+ totalCombinaciones);
-        double tiempo = totalCombinaciones/(4E9*31556926); // 31,556,926: segundos en un año
+        System.out.println("Tiempo (seg): " + totalCombinaciones/40E9);
+        double tiempo = totalCombinaciones/(40E9*31556926); // 31,556,926: segundos en un año
         System.out.println("Tiempo: "+tiempo);
         return tiempo;
     }
@@ -42,9 +43,9 @@ public class NivelSeguridad {
         int nivel;
         if(tmpProcesamiento<=1){
             nivel = 1;
-        }else if(tmpProcesamiento>1&&tmpProcesamiento<=1000){
+        }else if(tmpProcesamiento>1&&tmpProcesamiento<=100000){ // 1000
             nivel = 2;
-        }else if(tmpProcesamiento>1000&&tmpProcesamiento<=2500){
+        }else if(tmpProcesamiento>100000&&tmpProcesamiento<=2.5E9){ //2500
             nivel = 3;
         }else{
             nivel = 4;
