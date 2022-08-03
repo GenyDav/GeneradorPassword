@@ -3,8 +3,12 @@ package generadorcontraseña;
 import java.util.Random;
 
 /**
- *
+ * Clase encargada de crear una contraseña nueva según las especificaciones del
+ * usuario. Estas pueden ser creadas con una longitud de entre 4 y 50 caracteres.
+ * Los caracteres aceptados son: letras mayúsculas y minúsculas, dígitos del 0 al
+ * 9 y los símbolos !, #, $, %, &, ?, *, ^, @, +.
  * @author Geny
+ * @version 1.0
  */
 public class Gen {
     private final String MAYUSCULAS;
@@ -16,7 +20,7 @@ public class Gen {
     private boolean minusculas,mayusculas,numeros,simbolos;
     private int longitud;
     private StringBuilder clave;
-    Random rand;
+    private Random rand;
     
     public Gen(){
         rand = new Random();
@@ -24,14 +28,12 @@ public class Gen {
         MAYUSCULAS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         NUMEROS = "0123456789";
         SIMBOLOS = "!#$%&?*^@+";
-
-        caracteres = "";
-        longitud = 0;
-        clave = new StringBuilder();
     }
     
     public void definirPropiedades(int tam,boolean minus,boolean mayus,boolean num,boolean sim){
         caracteres = "";
+        clave = new StringBuilder();
+        
         longitud = tam;
         minusculas = minus;
         mayusculas = mayus;
@@ -57,7 +59,7 @@ public class Gen {
     }
     
     public String generarClave(){
-        System.out.println("=>"+rand.nextInt(0));
+        //System.out.println("=>"+rand.nextInt(0));
         for(int i=1;i<=longitud;i++){
             clave.append(caracteres.charAt(rand.nextInt(caracteres.length())));   
         }
@@ -83,19 +85,5 @@ public class Gen {
             clave.insert(rand.nextInt(clave.length()+1), SIMBOLOS.charAt(rand.nextInt(SIMBOLOS.length())));
         }
         return clave.toString();
-    }
-    
-    /**
-     * @param args the command line arguments
-     * Escoger un valor para cada categoria, ordenarlos de forma aleatoria
-     * para completar la longitud de la contraseña, escoger los demas elementos
-     * por categoria y valor aleatorio
-     * añadirlos de forma aleatoria tambien
-     * Si la contraseña es de menos de 4 carac. escoger de forma aleatoria
-     */
-    public static void main(String[] args) {
-        Gen g = new Gen();
-        g.definirPropiedades(6, true, true, true, true);
-        System.out.println(g.generarClave());
     }
 }
