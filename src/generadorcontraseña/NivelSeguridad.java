@@ -46,31 +46,43 @@ public class NivelSeguridad {
     
     /**
      * Método que realiza el cálculo del tiempo (en años) requerido para romper 
-     * una contraseña. Primero se calcula el número de contraseñas posibles de 
-     * longitud L que se pueden crear utilizando un conjunto caracteres de tamaño 
-     * N efectuando la operación N^L. Despues, la cantidad obtenida se divide entre
-     * el resultado de multiplicar 40x10^9 (número de hashes por segundo de una
-     * tarjeta gráfica RTX 2080) por 31,556,926 (cantidad de segundos en un año).
+     * una contraseña utilizando el método de búsqueda por fuerza bruta. Primero 
+     * se calcula el número de contraseñas posibles de longitud L que se pueden 
+     * crear utilizando el conjunto caracteres de tamaño N, efectuando la operación 
+     * N^L. Despues, la cantidad obtenida se divide entre el resultado de multiplicar 
+     * 40x10^9 (número de hashes por segundo de una tarjeta gráfica RTX 2080, 
+     * utilizada como referencia para hacer los cálculos) por 31,556,926 (cantidad 
+     * de segundos en un año).
      * Información obtenida de https://www.hivesystems.io/blog/are-your-passwords-in-the-green
-     * @return 
+     * @return Tiempo en años necesario para 'romper' la contraseña creada 
      */
     public double calcularTiempoProcesamiento(){
         double totalCombinaciones = Math.pow(totalCaracteres,longitudPasswd);
-        System.out.println("Combinaciones: "+ totalCombinaciones);
-        System.out.println("Tiempo (seg): " + totalCombinaciones/40E9);
-        double tiempo = totalCombinaciones/(40E9*31556926); // 31,556,926: segundos en un año
-        System.out.println("Tiempo: "+tiempo);
+        //System.out.println("Combinaciones: "+ totalCombinaciones);
+        double tiempo = totalCombinaciones/(40E9*31556926);
+        //System.out.println("Tiempo (años): " + tiempo);
         return tiempo;
     }
     
+    /**
+     * Asigna un nivel de seguridad a la contraseña creada utilizando como criterio
+     * la cantidad de años de procesamiento necesarios para poder romper la 
+     * contraseña. La constraseña puede ser asignada en alguno de los cuatro 
+     * niveles siguientes:
+     * 1: El tiempo requerido es menor o igual a un año
+     * 2: El tiempo requerido es mayor a un año y menor o igual a un millón de años
+     * 3: El tiempo requerido es mayor a un millón de años y menor o igual a dos mil quinientos millones de años
+     * 4: El tiempo requerido es mayor a dos mil quinientos millones de años (2,500,000,000)
+     * @return Nivel de seguridad asignado a la contraseña
+     */
     public int obtenerNivel(){
         double tmpProcesamiento = calcularTiempoProcesamiento();
         int nivel;
         if(tmpProcesamiento<=1){
             nivel = 1;
-        }else if(tmpProcesamiento>1&&tmpProcesamiento<=100000){ // 1000
+        }else if(tmpProcesamiento>1&&tmpProcesamiento<=1E6){
             nivel = 2;
-        }else if(tmpProcesamiento>100000&&tmpProcesamiento<=2.5E9){ //2500
+        }else if(tmpProcesamiento>1E6&&tmpProcesamiento<=2.5E9){
             nivel = 3;
         }else{
             nivel = 4;
