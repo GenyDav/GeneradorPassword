@@ -81,32 +81,30 @@ public class Gen {
         }
     }
     
-    public String generarClave(){
-        //System.out.println("=>"+rand.nextInt(0));
+    /**
+     * Genera una nueva contraseña escogiendo de forma aleatoria los caracteres
+     * que la forman.
+     * @return Contraseña nueva
+     */
+    public String generarClave(){ 
+        // EL programa selecciona de forma aleatoria un caracter de entre los que
+        // se encuentran en la variable universoCaracteres y lo agrega a la variable
+        // que continene la contraseña que se está formando.
         for(int i=1;i<=longitud;i++){
             clave.append(universoCaracteres.charAt(rand.nextInt(universoCaracteres.length())));   
         }
-        System.out.println("- "+clave.toString());
-        if(requiereMinusculas){
-            //int pos = rand.nextInt(clave.length()+1);
-            //System.out.println("pos " + pos);
+        // Para garantizar que la contraseña contenga todos los tipos de caracteres
+        // que el usuario necesita, por cada tipo marcado por el usuario, se inserta
+        // de forma aleatoria un caracter de ese tipo al String 'clave'.
+        if(requiereMinusculas)
             clave.insert(rand.nextInt(clave.length()+1), MINUSCULAS.charAt(rand.nextInt(MINUSCULAS.length())));
-        }
-        if(requiereMayusculas){
-            //int pos = rand.nextInt(clave.length()+1);
-            //System.out.println("pos " + pos);
+        if(requiereMayusculas)
             clave.insert(rand.nextInt(clave.length()+1), MAYUSCULAS.charAt(rand.nextInt(MAYUSCULAS.length())));
-        }
-        if(requiereNumeros){
-            //int pos = rand.nextInt(clave.length()+1);
-            //System.out.println("pos " + pos);
+        if(requiereNumeros)
             clave.insert(rand.nextInt(clave.length()+1), NUMEROS.charAt(rand.nextInt(NUMEROS.length())));
-        }
-        if(requiereSimbolos){
-            //int pos = rand.nextInt(clave.length()+1);
-            //System.out.println("pos " + pos);
+        if(requiereSimbolos)
             clave.insert(rand.nextInt(clave.length()+1), SIMBOLOS.charAt(rand.nextInt(SIMBOLOS.length())));
-        }
+
         return clave.toString();
     }
 }
