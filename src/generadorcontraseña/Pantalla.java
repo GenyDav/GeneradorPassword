@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package generadorcontraseña;
 
 import java.awt.Color;
@@ -10,8 +5,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Clase que contiene la interfaz gráfica del programa. Proporciona los 
+ * elementos necesarios para que el usuario pueda configurar las propiedades de 
+ * la contraseña (longitud y tipo de caracteres a utilizar) según sus necesidades.
  * @author Geny
+ * @version 1.0
  */
 public class Pantalla extends javax.swing.JFrame {
     private Gen generador;
@@ -220,21 +218,39 @@ public class Pantalla extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Copia la contraseña generada en el portapapeles.
+     * @param evt Evento lanzado al presionar el botón 'Copiar' 
+     */
     private void btnCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopiarActionPerformed
         campoPassword.selectAll();
         campoPassword.copy();
     }//GEN-LAST:event_btnCopiarActionPerformed
 
+    /**
+     * Genera una contraseña distinta cada vez que se presiona el botón 'Generar'.
+     * @param evt Evento lanzado al presionar el botón 'Generar' 
+     */
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         actualizarPassword();
     }//GEN-LAST:event_btnGenerarActionPerformed
-
+    
+    /**
+     * Método que garantiza que siempre se encuentre seleccionado al menos uno
+     * de los tipos de caracteres que pueden ser incluidos para generar una
+     * contraseña.
+     * Si el usuario selecciona/deselecciona un elemento y el total de elementos
+     * seleccionados es mayor a 1, se crea una nueva contraseña que ya incluye los
+     * caracteres de los tipos seleccionados.
+     * @param checkBox Checkbox sobre el que el usuario ha realizado una acción 
+     */
     private void verificarCheckBoxes(javax.swing.JCheckBox checkBox){
         if(!checkBox.isSelected()){
             if(numPropSel>1){
                 numPropSel--;
                 actualizarPassword();
             }else{
+                // si solo existe un tipo seleccionado, no es posible quitarle la selección a ese elemento
                 checkBox.setSelected(true);
             }
         }else{
@@ -243,6 +259,12 @@ public class Pantalla extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Llama al método encargado de verificar que siempre se encuentre seleccionado 
+     * al menos el checkbox para la opción de letras minúsculas.
+     * @param evt Evento lanzado al presionar el checkbox que permite incluir 
+     * letras minúsculas en la contraseña
+     */
     private void checkMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMinusActionPerformed
         verificarCheckBoxes(checkMinus);
     }//GEN-LAST:event_checkMinusActionPerformed
@@ -364,24 +386,31 @@ public class Pantalla extends javax.swing.JFrame {
         cambiarColorNivel(nivel.obtenerNivel());
     }
     
+    /**
+     * Cambia el color de la barra horizontal dependiendo del nivel de seguridad
+     * de la contraseña. La barra puede tomar cuatro colores distintos, que 
+     * corresponden uno a cada nivel: rojo(1), naranja(2), amarillo(3), verde(4).
+     * @param nivel Grado de seguridad de la contraseña
+     */
     private void cambiarColorNivel(int nivel){
         switch(nivel){
             case 1:
-                jPanel1.setBackground(new Color(255,51,51));
+                jPanel1.setBackground(new Color(255,51,51)); // Rojo
                 break;
             case 2:
-                jPanel1.setBackground(new Color(255,153,51));
+                jPanel1.setBackground(new Color(255,153,51)); // Naranja
                 break;
             case 3:
-                jPanel1.setBackground(new Color(255,204,51));
+                jPanel1.setBackground(new Color(255,204,51)); // Amarillo
                 break;
             case 4:
-                jPanel1.setBackground(new Color(146,208,80));
+                jPanel1.setBackground(new Color(146,208,80)); // Verde
                 break;
         }
     }
     
     /**
+     * Método que inicia la ejecución del programa.
      * @param args the command line arguments
      */
     public static void main(String args[]) {
