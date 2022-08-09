@@ -21,7 +21,8 @@ public class Pantalla extends javax.swing.JFrame {
     private NivelSeguridad nivel;
     
     /**
-     * Creates new form Pantalla
+     * Crea una nueva forma Pantalla e inicializa todas las propiedades a sus
+     * valores por defecto.
      */
     public Pantalla() {
         initComponents();
@@ -32,11 +33,11 @@ public class Pantalla extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(getClass().getResource("/img/icono.png")).getImage());
-        campoPassword.setBackground(new java.awt.Color(0,0,0,1));
+        campoPassword.setBackground(new java.awt.Color(0,0,0,1)); // Hacer que el campo sea transparente
         tamPasswd.setBackground(new java.awt.Color(0,0,0,1));
         generador = new Gen();
-        numPropSel = 4;
         longitud = Integer.parseInt(tamPasswd.getText());   
+        numPropSel = 4;
         longitudCorregida = false;
         LONGITUD_MAX = 50;
         LONGITUD_MIN = 4;
@@ -260,8 +261,8 @@ public class Pantalla extends javax.swing.JFrame {
     }
     
     /**
-     * Llama al método encargado de verificar que siempre se encuentre seleccionado 
-     * al menos el checkbox para la opción de letras minúsculas.
+     * Llama al método encargado de verificar en todo momento se encuentre 
+     * seleccionado al menos un checkbox (en este caso, el de letras minúsculas).
      * @param evt Evento lanzado al presionar el checkbox que permite incluir 
      * letras minúsculas en la contraseña
      */
@@ -269,26 +270,52 @@ public class Pantalla extends javax.swing.JFrame {
         verificarCheckBoxes(checkMinus);
     }//GEN-LAST:event_checkMinusActionPerformed
 
+    /**
+     * Llama al método encargado de verificar que en todo momento se encuentre 
+     * seleccionado al menos un checkbox (en este caso, el de letras mayúsculas).
+     * @param evt Evento lanzado al presionar el checkbox que permite incluir
+     * letras mayúsuclas en la contraseña
+     */
     private void checkMayusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkMayusActionPerformed
         verificarCheckBoxes(checkMayus);
     }//GEN-LAST:event_checkMayusActionPerformed
 
+    /**
+     * Llama al método encargado de verificar que en todo momento se encuentre
+     * seleccionado al menos un checkbox (en este caso, el de números).
+     * @param evt Evento lanzado al presionar el checkbox que permite incluir
+     * números en la contraseña
+     */
     private void checkNumsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkNumsActionPerformed
         verificarCheckBoxes(checkNums);
     }//GEN-LAST:event_checkNumsActionPerformed
 
+    /**
+     * Llama al método encargado de verificar que en todo momento se encuentre
+     * seleccionado al menos un checkbox (en este caso, el de símbolos).
+     * @param evt Evento lanzado al presionar el checkbox que permite incluir 
+     * símbolos en la contraseña
+     */
     private void checkSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkSimActionPerformed
         verificarCheckBoxes(checkSim);
     }//GEN-LAST:event_checkSimActionPerformed
 
+    /**
+     * Método que filtra todo lo que escribe el usuario en el campo de longitud
+     * de contraseña, de forma que solo se acepten dígitos decimales.
+     * @param evt Envento lanzado cuando el usuario escribe algo en el teclado
+     */
     private void tamPasswdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyTyped
         int caracter = evt.getKeyChar();
-        //System.out.println(caracter);
         if(!(caracter>=48&&caracter<=57)){ // Ignorar lo que no sea un número
             evt.consume();
         }
     }//GEN-LAST:event_tamPasswdKeyTyped
 
+    /**
+     * 
+     * @param evt 
+     */
     private void tamPasswdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyReleased
         if(evt.getKeyCode()==KeyEvent.VK_ENTER||evt.getKeyCode()==KeyEvent.VK_TAB){
             if(!tamPasswd.getText().equals("")){
@@ -332,16 +359,37 @@ public class Pantalla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tamPasswdKeyReleased
 
+    /**
+     * Llama al método encargado de verificar que la longitud de la contraseña
+     * se encuentre en el intervalo aceptado por el programa (4 y 50 caracteres).
+     * @param evt Evento lanzado cuando el campo de texto para la longitud de la 
+     * contraseña pierde el foco
+     */
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
         longitudCorregida = verificarLongitud();
     }//GEN-LAST:event_tamPasswdFocusLost
 
+    /**
+     * Método que es llamado cuando el usuario hace clic sobre el botón de flecha
+     * hacia arriba. Si al hacer clic el valor de la longitud no se encuentra 
+     * dentro del rango de valores aceptados, este se corrige por el valor 
+     * mínimo válido (4). En cambio, si el valor de la longitud está dentro del 
+     * rango de valores aceptados, al hacer clic en el botón, ese valor se 
+     * incrementa en uno.
+     * @param evt Evento lanzado cuando el usuario hace clic sobre el botón de 
+     * flecha hacia arriba
+     */
     private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
         if(!longitudCorregida) aumentarLongitud();  
         actualizarPassword();
         longitudCorregida = false;
     }//GEN-LAST:event_btnIncrementoActionPerformed
 
+    /**
+     * 
+     * @param evt Evento lanzado cuando el usuario hace clic sobre el botón de
+     * flecha hacia abajo
+     */
     private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
         if(!longitudCorregida) disminuirLongitud();  
         actualizarPassword();
@@ -379,6 +427,9 @@ public class Pantalla extends javax.swing.JFrame {
         if(longitud<LONGITUD_MAX) btnIncremento.setEnabled(true);
     }
     
+    /**
+     * 
+     */
     private void actualizarPassword(){
         generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         campoPassword.setText(generador.generarClave());
@@ -411,7 +462,7 @@ public class Pantalla extends javax.swing.JFrame {
     
     /**
      * Método que inicia la ejecución del programa.
-     * @param args the command line arguments
+     * @param args Argumentos de la línea de comandos
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
