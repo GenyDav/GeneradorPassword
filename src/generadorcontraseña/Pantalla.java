@@ -315,8 +315,18 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_tamPasswdKeyTyped
 
     /**
-     * 
-     * @param evt 
+     * Metodo que detecta los eventos cuando el usuario deja de presionar las 
+     * siguientes teclas:
+     * ENTER y TAB: despues de que el usuario escribió un valor en el campo de 
+     * longitud. Al presionar estas teclas, se verifica que el campo no esté 
+     * vacío; si no lo está se genera una nueva contraseña con el nuevo valor de
+     * longitud y se actualiza el color de la barra de nivel.
+     * UP y DOWN: incrementan y disminuyen el valor de la longitud, respectivamente.
+     * En cada cambio ocurrido en el valor, se actualiza la contraseña.
+     * Números decimales (0-9): convierte en un número entero el texto en el 
+     * campo de longitud y habilita/deshabilita los botones de flecha hacia 
+     * arriba y abajo según el valor obtenido en la conversión.
+     * @param evt Evento lanzado al soltar una tecla presionada
      */
     private void tamPasswdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyReleased
         if(evt.getKeyCode()==KeyEvent.VK_ENTER||evt.getKeyCode()==KeyEvent.VK_TAB){
@@ -404,6 +414,14 @@ public class Pantalla extends javax.swing.JFrame {
         actualizarPassword();
     }//GEN-LAST:event_btnDecrementoActionPerformed
     
+     /**
+      * Método que verifica que la longitud para la contraseña está dentro del
+      * intervalo de valores aceptados. Si no es así, este valor se sustituye por
+      * el valor mínimo o máximo válidos: si el usuario ingresa un valor menor
+      * a 4, el valor de la longitud se sustituirá por este; del mismo modo, si 
+      * el valor es mayor a 50, el valor de la longitud se sustituirá por este.
+      * @return Booleano que indica si se corrigió la longitud
+      */
     private boolean verificarLongitud(){    
         if(longitud<LONGITUD_MIN){
             longitud = LONGITUD_MIN;
@@ -422,12 +440,26 @@ public class Pantalla extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Incrementa en uno el valor de la longitud y actualiza la disponibilidad
+     * de los botones de incremento/decremento según el nuevo valor. Si al 
+     * incrementar la longitud su valor es igual a 50, el botón de flecha hacia
+     * arriba se deshabilita. Si el valor es mayor a 4, el botón de flecha hacia
+     * abajo se habilita.
+     */
     public void aumentarLongitud(){
         tamPasswd.setText(String.valueOf(++longitud));
         if(longitud>=LONGITUD_MAX) btnIncremento.setEnabled(false);
         if(longitud>LONGITUD_MIN) btnDecremento.setEnabled(true);
     }
     
+    /**
+     * Disminuye en uno el valor de la longitud y actualiza la disponibilidad de
+     * los botones de incremento/decremento según el nuevo valor. Si al 
+     * disminuir la longitud su valor es igual a 4, el botón de flecha hacia
+     * abajo se deshabilita. Si el valor es menor a 50, el botón de flecha hacia
+     * arriba se habilita.
+     */
     public void disminuirLongitud(){
         tamPasswd.setText(String.valueOf(--longitud));
         if(longitud<=LONGITUD_MIN) btnDecremento.setEnabled(false);
@@ -435,7 +467,8 @@ public class Pantalla extends javax.swing.JFrame {
     }
     
     /**
-     * 
+     * Encargado de llamar a los métodos que pueden generar una contraseña nueva
+     * y actualizar el color de la barra de nivel de seguridad.
      */
     private void actualizarPassword(){
         generador.definirPropiedades(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
