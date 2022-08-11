@@ -12,13 +12,14 @@ import javax.swing.ImageIcon;
  * @version 1.0
  */
 public class Pantalla extends javax.swing.JFrame {
-    private Gen generador;
-    private int numPropSel;
-    private int longitud;
-    private final int LONGITUD_MAX;
-    private final int LONGITUD_MIN;
-    private boolean longitudCorregida;
-    private NivelSeguridad nivel;
+    private Gen generador;              // objeto que crea las contraseñas
+    private int numPropSel;             // número de tipos de caracteres que se utilizan en la generación de la contraseña
+    private int longitud;               // número caracteres de la contraseña
+    private final int LONGITUD_MAX;     // longitud máxima que debe tener una contraseña (50)
+    private final int LONGITUD_MIN;     // longitud mínima que debe tener una contraseña (4)
+    private boolean longitudCorregida;  // true si hubo cambio en la longitud porque su valor estaba fuera de rango
+    private boolean teclaPresionada;
+    private NivelSeguridad nivel;       // nivel de seguridad de la contraseña
     
     /**
      * Crea una nueva forma Pantalla e inicializa todas las propiedades a sus
@@ -39,6 +40,7 @@ public class Pantalla extends javax.swing.JFrame {
         longitud = Integer.parseInt(tamPasswd.getText());   
         numPropSel = 4;
         longitudCorregida = false;
+        teclaPresionada = false;
         LONGITUD_MAX = 50;
         LONGITUD_MIN = 4;
     }
@@ -320,7 +322,7 @@ public class Pantalla extends javax.swing.JFrame {
         if(evt.getKeyCode()==KeyEvent.VK_ENTER||evt.getKeyCode()==KeyEvent.VK_TAB){
             if(!tamPasswd.getText().equals("")){
                 tamPasswd.transferFocus(); 
-                //comprobarLongitud();
+                teclaPresionada = true;
                 actualizarPassword();
             }
             return;
@@ -367,12 +369,14 @@ public class Pantalla extends javax.swing.JFrame {
      */
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
         longitudCorregida = verificarLongitud();
+        if(teclaPresionada) longitudCorregida = false;
+        teclaPresionada = false;
     }//GEN-LAST:event_tamPasswdFocusLost
 
     /**
      * Método que es llamado cuando el usuario hace clic sobre el botón de flecha
-     * hacia arriba. Si al hacer clic el valor de la longitud no se encuentra 
-     * dentro del rango de valores aceptados, este se corrige por el valor 
+     * hacia arriba. Si al hacer clic el valor de la longitud se encuentra por
+     * debajo del rango de valores aceptados, este se sustituye por el valor 
      * mínimo válido (4). En cambio, si el valor de la longitud está dentro del 
      * rango de valores aceptados, al hacer clic en el botón, ese valor se 
      * incrementa en uno.
@@ -381,23 +385,26 @@ public class Pantalla extends javax.swing.JFrame {
      */
     private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
         if(!longitudCorregida) aumentarLongitud();  
+        else longitudCorregida = false; // reinciar el valor de control
         actualizarPassword();
-        longitudCorregida = false;
     }//GEN-LAST:event_btnIncrementoActionPerformed
 
     /**
-     * 
+     * Metodo que es llamado cuando el usuario hace clic sobre el botón de flecha
+     * hacia abajo. Si al hacer clic el valor de la longitud supera el rango de
+     * valores aceptados, este se sustituye por el valor máximo aceptado(50).
+     * En cambio, si el valor de la longitud está dentro del rango de
+     * valores aceptados, al hacer clic en el botón, ese valor disminuye en uno.
      * @param evt Evento lanzado cuando el usuario hace clic sobre el botón de
      * flecha hacia abajo
      */
     private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
-        if(!longitudCorregida) disminuirLongitud();  
+        if(!longitudCorregida) disminuirLongitud();
+        else longitudCorregida = false;
         actualizarPassword();
-        longitudCorregida = false;
     }//GEN-LAST:event_btnDecrementoActionPerformed
     
     private boolean verificarLongitud(){    
-        System.out.println("Longitud: " + longitud);
         if(longitud<LONGITUD_MIN){
             longitud = LONGITUD_MIN;
             tamPasswd.setText(String.valueOf(LONGITUD_MIN));
@@ -431,7 +438,7 @@ public class Pantalla extends javax.swing.JFrame {
      * 
      */
     private void actualizarPassword(){
-        generador.definirPropiedades(Integer.parseInt(tamPasswd.getText()),checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
+        generador.definirPropiedades(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         campoPassword.setText(generador.generarClave());
         nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         cambiarColorNivel(nivel.obtenerNivel());
