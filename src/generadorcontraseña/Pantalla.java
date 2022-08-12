@@ -228,6 +228,7 @@ public class Pantalla extends javax.swing.JFrame {
     private void btnCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopiarActionPerformed
         campoPassword.selectAll();
         campoPassword.copy();
+        longitudCorregida = false;
     }//GEN-LAST:event_btnCopiarActionPerformed
 
     /**
@@ -471,6 +472,7 @@ public class Pantalla extends javax.swing.JFrame {
      * y actualizar el color de la barra de nivel de seguridad.
      */
     private void actualizarPassword(){
+        longitudCorregida = false;
         generador.definirPropiedades(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
         campoPassword.setText(generador.generarClave());
         nivel = new NivelSeguridad(longitud,checkMinus.isSelected(),checkMayus.isSelected(),checkNums.isSelected(),checkSim.isSelected());
