@@ -15,11 +15,17 @@ public class Pantalla extends javax.swing.JFrame {
     private Gen generador;              // objeto que crea las contraseñas
     private int numPropSel;             // número de tipos de caracteres que se utilizan en la generación de la contraseña
     private int longitud;               // número caracteres de la contraseña
+    private NivelSeguridad nivel;       // nivel de seguridad de la contraseña
     private final int LONGITUD_MAX;     // longitud máxima que debe tener una contraseña (50)
     private final int LONGITUD_MIN;     // longitud mínima que debe tener una contraseña (4)
     private boolean longitudCorregida;  // true si hubo cambio en la longitud porque su valor estaba fuera de rango
-    private boolean teclaPresionada;
-    private NivelSeguridad nivel;       // nivel de seguridad de la contraseña
+    
+    private boolean actualizacionIncompleta; /* True si la corrección de la longitud 
+        se hizo sin actualizar la contraseña después. Esto ocurre cuando el campo de 
+        longitud pierde el foco por causa de cualquier otro elemento disinto al botón
+        para generar una contraseña nueva o un checkbox (por ejemplo, al hacer 
+        clic en el campo de la contraseña nueva o en el botón copiar).
+    */
     
     /**
      * Crea una nueva forma Pantalla e inicializa todas las propiedades a sus
@@ -40,7 +46,7 @@ public class Pantalla extends javax.swing.JFrame {
         longitud = Integer.parseInt(tamPasswd.getText());   
         numPropSel = 4;
         longitudCorregida = false;
-        teclaPresionada = false;
+        actualizacionIncompleta = false;
         LONGITUD_MAX = 50;
         LONGITUD_MIN = 4;
     }
@@ -167,6 +173,11 @@ public class Pantalla extends javax.swing.JFrame {
         campoPassword.setOpaque(false);
         campoPassword.setSelectedTextColor(new java.awt.Color(204, 204, 204));
         campoPassword.setSelectionColor(new java.awt.Color(0, 2, 72));
+        campoPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPasswordMouseClicked(evt);
+            }
+        });
         getContentPane().add(campoPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(113, 132, 310, 50));
 
         checkMinus.setSelected(true);
@@ -228,7 +239,7 @@ public class Pantalla extends javax.swing.JFrame {
     private void btnCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopiarActionPerformed
         campoPassword.selectAll();
         campoPassword.copy();
-        longitudCorregida = false;
+        actualizacionIncompleta = true;
     }//GEN-LAST:event_btnCopiarActionPerformed
 
     /**
@@ -332,9 +343,11 @@ public class Pantalla extends javax.swing.JFrame {
     private void tamPasswdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tamPasswdKeyReleased
         if(evt.getKeyCode()==KeyEvent.VK_ENTER||evt.getKeyCode()==KeyEvent.VK_TAB){
             if(!tamPasswd.getText().equals("")){
+                System.out.println("key released============");
                 tamPasswd.transferFocus(); 
-                teclaPresionada = true;
+                actualizacionIncompleta = true;
                 actualizarPassword();
+                System.out.println("===key released============");
             }
             return;
         }
@@ -379,9 +392,10 @@ public class Pantalla extends javax.swing.JFrame {
      * contraseña pierde el foco
      */
     private void tamPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tamPasswdFocusLost
+        System.out.println("Focus lost======================");
         longitudCorregida = verificarLongitud();
-        if(teclaPresionada) longitudCorregida = false;
-        teclaPresionada = false;
+        System.out.println("longitudCorregida: " + longitudCorregida);
+        System.out.println("===Focus lost======================");
     }//GEN-LAST:event_tamPasswdFocusLost
 
     /**
@@ -395,9 +409,16 @@ public class Pantalla extends javax.swing.JFrame {
      * flecha hacia arriba
      */
     private void btnIncrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncrementoActionPerformed
+        System.out.println("btnincremento===========================");
+        System.out.println("actualizacionIncompleta: "+ actualizacionIncompleta);
+        System.out.println("longitudCorregida: "+ longitudCorregida);
+        if(actualizacionIncompleta) longitudCorregida = false;      
+        // Si la longitud no debió ser corregida al hacer clic en el botón, entonces
+        // se incrementa su valor en uno
         if(!longitudCorregida) aumentarLongitud();  
-        else longitudCorregida = false; // reinciar el valor de control
         actualizarPassword();
+        actualizacionIncompleta = false;
+        System.out.println("===btnincremento===========================");
     }//GEN-LAST:event_btnIncrementoActionPerformed
 
     /**
@@ -410,19 +431,26 @@ public class Pantalla extends javax.swing.JFrame {
      * flecha hacia abajo
      */
     private void btnDecrementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecrementoActionPerformed
+        if(actualizacionIncompleta) longitudCorregida = false;   
         if(!longitudCorregida) disminuirLongitud();
-        else longitudCorregida = false;
+        //else longitudCorregida = false;
         actualizarPassword();
+        actualizacionIncompleta = false;
     }//GEN-LAST:event_btnDecrementoActionPerformed
+
+    private void campoPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPasswordMouseClicked
+        actualizacionIncompleta = true;
+        System.out.println("actualizacionIncompleta: " + actualizacionIncompleta);
+    }//GEN-LAST:event_campoPasswordMouseClicked
     
-     /**
-      * Método que verifica que la longitud para la contraseña está dentro del
-      * intervalo de valores aceptados. Si no es así, este valor se sustituye por
-      * el valor mínimo o máximo válidos: si el usuario ingresa un valor menor
-      * a 4, el valor de la longitud se sustituirá por este; del mismo modo, si 
-      * el valor es mayor a 50, el valor de la longitud se sustituirá por este.
-      * @return Booleano que indica si se corrigió la longitud
-      */
+    /**
+     * Método que verifica que la longitud para la contraseña está dentro del
+     * intervalo de valores aceptados. Si no es así, este valor se sustituye por
+     * el valor mínimo o máximo válidos: si el usuario ingresa un valor menor
+     * a 4, el valor de la longitud se sustituirá por este; del mismo modo, si 
+     * el valor es mayor a 50, el valor de la longitud se sustituirá por este.
+     * @return Booleano que indica si se corrigió la longitud
+     */
     private boolean verificarLongitud(){    
         if(longitud<LONGITUD_MIN){
             longitud = LONGITUD_MIN;
