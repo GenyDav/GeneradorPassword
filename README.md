@@ -14,6 +14,6 @@ Proyecto realizado en Java
 * https://www.hivesystems.io/blog/are-your-passwords-in-the-green
 
 ## Créditos
-* Ícono del programa: [Computer icon password](https://www.pngwing.com/en/free-png-yqsnx)
-* Ícono copiar: [Íconos de computadora-copiar](https://www.pngwing.com/es/free-png-tnvcm)
+* Ícono del programa: [Computer icon - password](https://www.pngwing.com/en/free-png-yqsnx)
+* Ícono copiar: [Íconos de computadora - copiar](https://www.pngwing.com/es/free-png-tnvcm)
 * Ícono recarga: [Ícono de flecha de bucle](https://www.klipartz.com/es/sticker-png-oclie)
