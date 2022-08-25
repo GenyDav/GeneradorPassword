@@ -7,9 +7,9 @@ Permite crear contraseñas distintas con una longitud de entre 4 y 50 caracteres
 * Al generar una contraseña, una barra de color muestra que tan segura es, en base a su longitud y el tipo de caracteres incluídos
 
 ### Capturas de pantalla
-!(Contraseña de nivel de seguridad bajo)[img_readme/Captura2.PNG]
-!(Contraseña de nivel de seguridad medio)[img_readme/Captura3.PNG]
-!(Contraseña de nivel de seguridad alto)[img_readme/Captura1.PNG]
+![Contraseña de nivel de seguridad bajo](img_readme/Captura2.PNG)
+![Contraseña de nivel de seguridad medio](img_readme/Captura3.PNG)
+![Contraseña de nivel de seguridad alto](img_readme/Captura1.PNG)
 
 ## Lenguajes
 Proyecto realizado en Java
