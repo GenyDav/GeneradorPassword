@@ -15,7 +15,7 @@ Permite crear contraseñas distintas con una longitud de entre 4 y 50 caracteres
 Proyecto realizado en Java
 
 ## Fuentes de información
-Las siguientes páginas se consultaron para tener una idea de la forma en que se calcula el nivel de seguridad de una contraseña:
+El cálculo del nivel de seguridad de las contraseñas generadas se basa en la información encontrada en las siguientes páginas:
 * [La matemática de las claves: ¿numérica o alfanumérica?](https://www.welivesecurity.com/la-es/2014/06/13/matematica-claves-numerica-alfanumerica/) de [We Live Security by eset](https://www.welivesecurity.com/la-es/)
 * [Are Your Passwords in the Green?](https://www.hivesystems.io/blog/are-your-passwords-in-the-green) de [Hive Systems](https://www.hivesystems.io/)
 
