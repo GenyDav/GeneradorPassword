@@ -113,7 +113,7 @@ public class Pantalla extends javax.swing.JFrame {
                 btnDecrementoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDecremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 336, 48, 37));
+        getContentPane().add(btnDecremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 338, 48, 37));
 
         checkNums.setSelected(true);
         checkNums.setContentAreaFilled(false);
@@ -125,7 +125,7 @@ public class Pantalla extends javax.swing.JFrame {
                 checkNumsActionPerformed(evt);
             }
         });
-        getContentPane().add(checkNums, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 342, 100, 30));
+        getContentPane().add(checkNums, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 345, 100, 30));
 
         checkMayus.setSelected(true);
         checkMayus.setContentAreaFilled(false);
@@ -138,7 +138,7 @@ public class Pantalla extends javax.swing.JFrame {
                 checkMayusActionPerformed(evt);
             }
         });
-        getContentPane().add(checkMayus, new org.netbeans.lib.awtextra.AbsoluteConstraints(434, 302, 120, 30));
+        getContentPane().add(checkMayus, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 305, 120, 30));
 
         checkSim.setSelected(true);
         checkSim.setContentAreaFilled(false);
@@ -150,7 +150,7 @@ public class Pantalla extends javax.swing.JFrame {
                 checkSimActionPerformed(evt);
             }
         });
-        getContentPane().add(checkSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(434, 342, 110, 30));
+        getContentPane().add(checkSim, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 345, 110, 30));
 
         btnIncremento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnInc.png"))); // NOI18N
         btnIncremento.setBorderPainted(false);
@@ -163,7 +163,7 @@ public class Pantalla extends javax.swing.JFrame {
                 btnIncrementoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIncremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 300, 48, 37));
+        getContentPane().add(btnIncremento, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 302, 48, 37));
 
         campoPassword.setFont(new java.awt.Font("Segoe UI", 0, 22)); // NOI18N
         campoPassword.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,7 +189,7 @@ public class Pantalla extends javax.swing.JFrame {
                 checkMinusActionPerformed(evt);
             }
         });
-        getContentPane().add(checkMinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 302, 110, 30));
+        getContentPane().add(checkMinus, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 304, 110, 30));
 
         btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnGen.png"))); // NOI18N
         btnGenerar.setToolTipText("Generar nueva contraseña");
@@ -204,7 +204,7 @@ public class Pantalla extends javax.swing.JFrame {
                 btnGenerarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(501, 131, 54, 53));
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(501, 129, 54, 53));
 
         btnCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnCopiar.png"))); // NOI18N
         btnCopiar.setToolTipText("Copiar la contraseña");
@@ -219,12 +219,10 @@ public class Pantalla extends javax.swing.JFrame {
                 btnCopiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCopiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(437, 130, 54, 53));
+        getContentPane().add(btnCopiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(437, 129, 54, 53));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo.png"))); // NOI18N
         jLabel1.setAlignmentY(0.0F);
-        jLabel1.setMaximumSize(null);
-        jLabel1.setMinimumSize(null);
         jLabel1.setPreferredSize(new java.awt.Dimension(670, 468));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 468));
 
